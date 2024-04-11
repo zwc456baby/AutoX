@@ -4,7 +4,9 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
 }
-
+kotlin {
+    jvmToolchain(17)
+}
 android {
     compileSdk = versions.compile
 
@@ -25,11 +27,14 @@ android {
         }
     }
     lint.abortOnError = false
-
     sourceSets {
         getByName("main") {
             res.srcDirs("src/main/res","src/main/res-i18n")
         }
+    }
+    compileOptions {
+        sourceCompatibility = versions.javaVersion
+        targetCompatibility = versions.javaVersion
     }
     namespace = "com.stardust"
 }
@@ -46,4 +51,8 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     api(kotlin("reflect", version = "1.7.10"))
+
+    //MQTT
+    implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0")
+    implementation("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1")
 }
